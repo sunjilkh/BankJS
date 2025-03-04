@@ -100,13 +100,7 @@ const formatMovemateDate = function (movDates, locate) {
   if( dayPassed === 1) return 'Yesterday';
   if( dayPassed <= 7) return `${dayPassed} days ago`;
 
-    // const newDate = new Date(movDates);
-    // const day = `${newDate.getDate()}`.padStart(2,0);  
-    // const month=`${newDate.getMonth() +1}`.padStart(2,0);
-    // const year = newDate.getFullYear();
-    // const hour = newDate.getHours();
-    // const min = newDate.getMinutes();
-    // return`${day}/${month}/${year}, ${hour}:${min}`;
+   
   return new Intl.DateTimeFormat(locate).format(movDates);
 
 }
