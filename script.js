@@ -313,6 +313,17 @@ const CalculatedayPassed = ( date11, date2) => Math.abs((date2 - date11))/ (1000
  const dayPassed = CalculatedayPassed(new Date(2022, 3, 20), new Date(2022, 3, 15));
 console.log(dayPassed);
 
+const option = {
+  style: 'unit',
+  unit: 'mile-per-hour'
+}
+
+const num = 23.23;
+console.log('Eng', new Intl.NumberFormat('en-US',option ).format(num));
+console.log('Ban', new Intl.NumberFormat('bn-BD',option ).format(num));
+console.log('Syrea', new Intl.NumberFormat('ar-SY',option ).format(num));
+console.log(navigator.language, new Intl.NumberFormat(navigator.language).format(num));
+
 
 //REMAINDER oPER
 /*
