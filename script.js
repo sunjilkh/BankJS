@@ -193,9 +193,9 @@ const updateUI = function (acc) {
 let currentAccount;
 
 //Fake login
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 1;
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 1;
 
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
@@ -308,12 +308,14 @@ btnLoan.addEventListener('click', function (e) {
     ammount > 0 &&
     currentAccount.movements.some(mov => mov >= ammount * 0.1)
   ) {
-    currentAccount.movements.push(ammount);
+    setTimeout(function () {
+      currentAccount.movements.push(ammount);
 
-    //Adding Date of transfer
-    currentAccount.movementsDates.push(new Date().toISOString());
+      //Adding Date of transfer
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    updateUI(currentAccount);
+      updateUI(currentAccount);
+    }, 3000);
   } else alert('Loan denied');
 });
 
@@ -366,6 +368,23 @@ console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language, option).format(num)
 );
+
+const profile = ['Sunzil', 'Mirzapur, Tangail.'];
+
+const profileTimer = setTimeout(
+  (name, add2) => console.log(`${name} eat pizza 🍕, at ${add2}`),
+  3000,
+  ...profile
+);
+
+if (profile.includes('Sinthia')) clearTimeout(profileTimer);
+
+
+//setTimeout
+setInterval(()=>{
+  const now = new Date();
+  console.log(now);
+}, 1000)
 */
 
 //REMAINDER oPER
