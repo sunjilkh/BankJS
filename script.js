@@ -25,8 +25,8 @@ const account1 = {
     '2025-03-02T23:36:17.929Z',
     '2025-03-01T10:51:36.790Z',
   ],
-  currency: 'BDT',
-  locale: 'bn-IN', // de-DE
+  currency: 'EUR',
+  locale: 'en-UK', // de-DE
 };
 
 const account2 = {
@@ -103,9 +103,9 @@ const formatMovemateDate = function (movDates, locate) {
 
   const dayPassed = Math.round(CalculatedayPassed(new Date(), movDates));
   // console.log(dayPassed);
-  if (dayPassed === 0) return 'আজ';
-  if (dayPassed === 1) return 'গতকাল';
-  if (dayPassed <= 7) return `${dayPassed} দিন আগে`;
+  if (dayPassed === 0) return 'Today';
+  if (dayPassed === 1) return 'Yesterday';
+  if (dayPassed <= 7) return `${dayPassed} days ago`;
 
   return new Intl.DateTimeFormat(locate).format(movDates);
 };
@@ -189,8 +189,30 @@ const updateUI = function (acc) {
   calcSummary(acc);
 };
 
+//Setting timer
+const startLogoutTimer = function () {
+  const lulu = () => {
+    const min = String(Math.trunc(t / 60)).padStart(2, 0);
+    const sec = t % 60;
+    //print time/sec
+    labelTimer.textContent = `${min}:${sec}`;
+    t--;
+
+    if (t == 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Login to get started';
+      containerApp.style.opacity = 0;
+    }
+  };
+  //set timer
+  let t = 20;
+  //cal timer every second
+  const timer = setInterval(lulu, 1000);
+  return timer;
+};
+
 //Event handler
-let currentAccount;
+let currentAccount, timer;
 
 //Fake login
 currentAccount = account1;
@@ -244,8 +266,15 @@ btnLogin.addEventListener('click', function (e) {
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
+    //timer
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
     //Display UI
     updateUI(currentAccount);
+
+    //Reset Timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -277,6 +306,10 @@ btnTransfer.addEventListener('click', function (e) {
     inputTransferTo.blur();
   }
   updateUI(currentAccount);
+
+  //Reset Timer
+  clearInterval(timer);
+  timer = startLogoutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
@@ -315,6 +348,10 @@ btnLoan.addEventListener('click', function (e) {
       currentAccount.movementsDates.push(new Date().toISOString());
 
       updateUI(currentAccount);
+
+      //Reset Timer
+      clearInterval(timer);
+      timer = startLogoutTimer();
     }, 3000);
   } else alert('Loan denied');
 });
